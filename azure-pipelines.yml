@@ -10,7 +10,8 @@ schedules:
 - cron: "0 0,12 * * *"
   displayName: Daily midnight cleanup
   branches:
-    include: master
+    include:
+    - master
   always: true
 
 steps:
