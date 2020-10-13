@@ -6,6 +6,11 @@
 pool:
   vmImage: 'ubuntu-latest'
 
+schedules:
+- cron: "0 0,12 * * *"
+  displayName: Daily midnight cleanup
+  always: true
+
 steps:
 - task: NodeTool@0
   inputs:
