@@ -9,7 +9,8 @@ pool:
 schedules:
 - cron: "0 0,12 * * *"
   displayName: Daily midnight cleanup
-  include: master
+  branches:
+    include: master
   always: true
 
 steps:
