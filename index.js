@@ -3,9 +3,23 @@ const armResources = require('@azure/arm-resources');
 const armSubscriptions = require('@azure/arm-subscriptions');
 const { daysAgo, deleteResourceById, listResources, listResourcesOnResourceGroup, listResourceGroups } = require("./utils");
 const { Environment } = require("@azure/ms-rest-azure-env");
-async function doCleanup(subsId, subsName, ttl, client, secret, tenant) {
+async function doCleanup(subsId, subsName, ttl, client, secret, tenant, envName) {
+  envName = envName ? envName :"global";
+  let azureEnv = Environment.AzureCloud;
+  switch(envName.toLowerCase())
+  {
+    case "china":
+      azureEnv = Environment.ChinaCloud;
+      break;
+    case "usa":
+      azureEnv = Environment.USGovernment;
+      break;
+    case "german":
+      azureEnv = Environment.GermanCloud;
+      break;
+  }
   let cred = await msRestNodeAuth.loginWithServicePrincipalSecret(client, secret, tenant, {
-    environment: Environment.AzureCloud
+    environment: azureEnv
   });
 
   // do a subscription check first, to ensure resources doesn't get cleaned up by accident
@@ -97,5 +111,6 @@ const ttl = process.argv[4];
 const clientId = process.argv[5];
 const clientSecret = process.argv[6];
 const tenantId = process.argv[7];
+const envName = process.argv[8]
 
-doCleanup(subscriptionId, subscriptionName, ttl, clientId, clientSecret, tenantId).catch(console.log);
+doCleanup(subscriptionId, subscriptionName, ttl, clientId, clientSecret, tenantId, envName).catch(console.log);
