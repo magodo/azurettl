@@ -6,9 +6,11 @@
 pool:
   vmImage: 'ubuntu-latest'
 
+trigger: none
+
 schedules:
 - cron: "0 0,12 * * *"
-  displayName: Daily midnight cleanup
+  displayName: Daily cleanup
   branches:
     include:
     - master
