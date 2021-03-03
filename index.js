@@ -5,9 +5,9 @@ const { daysAgo, deleteResourceById, listResources, listResourcesOnResourceGroup
 const { Environment } = require("@azure/ms-rest-azure-env");
 
 // Resource Id starts with any of these prefix won't be clean up
-const PersistResourceIdPrefixes = [
-  "/subscriptions/937bc588-a144-4083-8612-5f9ffbbddb14/resourceGroups/servicelinker-test-linux-group",
-  "/subscriptions/937bc588-a144-4083-8612-5f9ffbbddb14/resourceGroups/servicelinker-test-win-group"
+const persistResourceIdPrefixes = [
+  "/subscriptions/937bc588-a144-4083-8612-5f9ffbbddb14/resourcegroups/servicelinker-test-linux-group",
+  "/subscriptions/937bc588-a144-4083-8612-5f9ffbbddb14/resourcegroups/servicelinker-test-win-group"
 ];
 
 async function doCleanup(subsId, subsName, ttl, client, secret, tenant, envName) {
@@ -57,7 +57,7 @@ async function doCleanup(subsId, subsName, ttl, client, secret, tenant, envName)
       continue;
     }
 
-    let presistPrefix = PersistResourceIdPrefixes.find((prefix) => resourceId.startsWith(prefix));
+    let presistPrefix = persistResourceIdPrefixes.find((prefix) => resourceId.startsWith(prefix));
     if (presistPrefix) {
       console.log(`  Resource ${resourceId} starts with persist prefix ${presistPrefix}, skip.`);
       continue;
