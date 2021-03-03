@@ -3,6 +3,13 @@ const armResources = require('@azure/arm-resources');
 const armSubscriptions = require('@azure/arm-subscriptions');
 const { daysAgo, deleteResourceById, listResources, listResourcesOnResourceGroup, listResourceGroups } = require("./utils");
 const { Environment } = require("@azure/ms-rest-azure-env");
+
+// Resource Id starts with any of these prefix won't be clean up
+const persistResourceIdPrefixes = [
+  "/subscriptions/937bc588-a144-4083-8612-5f9ffbbddb14/resourcegroups/servicelinker-test-linux-group",
+  "/subscriptions/937bc588-a144-4083-8612-5f9ffbbddb14/resourcegroups/servicelinker-test-win-group"
+];
+
 async function doCleanup(subsId, subsName, ttl, client, secret, tenant, envName) {
   envName = envName ? envName :"global";
   let azureEnv = Environment.AzureCloud;
@@ -43,11 +50,19 @@ async function doCleanup(subsId, subsName, ttl, client, secret, tenant, envName)
   // delete newly created resources first to solve dependency issues
   for (let r of resources.sort((x, y) => y.createdTime - x.createdTime)) {
     let daysCreate = daysAgo(r.createdTime);
+    let resourceId = r.id.toLowerCase();
     console.log(`Processing ${r.id}`);
     if (daysCreate <= ttl) {
       console.log(`  Created ${daysCreate} day(s) ago, skip.`);
       continue;
     }
+
+    let presistPrefix = persistResourceIdPrefixes.find((prefix) => resourceId.startsWith(prefix));
+    if (presistPrefix) {
+      console.log(`  Resource ${resourceId} starts with persist prefix ${presistPrefix}, skip.`);
+      continue;
+    }
+
     try {
       stats.toDeleteResources++;
       console.log(`  Created ${daysCreate} day(s) days ago, deleting...`);
