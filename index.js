@@ -7,7 +7,8 @@ const { Environment } = require("@azure/ms-rest-azure-env");
 // Resource Id starts with any of these prefix won't be clean up
 const persistResourceIdPrefixes = [
   "/subscriptions/937bc588-a144-4083-8612-5f9ffbbddb14/resourcegroups/servicelinker-test-linux-group",
-  "/subscriptions/937bc588-a144-4083-8612-5f9ffbbddb14/resourcegroups/servicelinker-test-win-group"
+  "/subscriptions/937bc588-a144-4083-8612-5f9ffbbddb14/resourcegroups/servicelinker-test-win-group",
+  "/subscriptions/67a9759d-d099-4aa8-8675-e6cfd669c3f4/resourcegroups/zhwen-domain"
 ];
 
 async function doCleanup(subsId, subsName, ttl, client, secret, tenant, envName) {
