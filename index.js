@@ -10,6 +10,7 @@ const persistResourceIdPrefixes = [
   "/subscriptions/937bc588-a144-4083-8612-5f9ffbbddb14/resourcegroups/servicelinker-test-win-group",
   "/subscriptions/937bc588-a144-4083-8612-5f9ffbbddb14/resourcegroups/intasldevrgeusa",
   "/subscriptions/937bc588-a144-4083-8612-5f9ffbbddb14/resourcegroups/mc_intasldevrgeusa_intasldevaksrpeusb_eastus",
+  "/subscriptions/937bc588-a144-4083-8612-5f9ffbbddb14/resourcegroups/cupertino-test",
   "/subscriptions/67a9759d-d099-4aa8-8675-e6cfd669c3f4/resourcegroups/zhwen-domain"
 ];
 
